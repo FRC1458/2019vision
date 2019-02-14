@@ -1,0 +1,12 @@
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+cap	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^cap = cv2.VideoCapture(0)$/;"	v	language:Python
+coeffs	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^coeffs = np.array([0.036169, -0.145812, -0.000633, 0.004249, 0.000000])$/;"	v	language:Python
+cv2	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^import cv2$/;"	i	language:Python
+cv2	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^import cv2$/;"	i	language:Python
+HUE	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^HUE = (13, 58)$/;"	v	language:Python
+img	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^    img = cap.read()[1]$/;"	v	language:Python
+mtx	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^mtx = np.array([[635.160599, 000.000000, 330.034234],$/;"	v	language:Python
+np	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^import numpy as np$/;"	i	language:Python
+np	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^import numpy as np$/;"	i	language:Python
+SAT	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^SAT = (89, 255)$/;"	v	language:Python
+VAL	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^VAL = (165, 255)$/;"	v	language:Python
