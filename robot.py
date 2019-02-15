@@ -20,7 +20,7 @@ cap.start()
 
 while True:
     img = cap.read()[1]
-    horiz_offset, angle_offset = process_frame(img)
+    horiz_offset, angle_offset, frame = process_frame(img)
 
     s = bot.get_sensors().bumps_wheeldrops
     if s.bump_left or s.bump_right:

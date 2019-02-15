@@ -47,6 +47,19 @@ class WebcamVideoStream:
 def solidity(contour):
     return float(cv2.contourArea(contour)) / float(cv2.contourArea(cv2.convexHull(contour)))
 
+def region_of_interest(img, vertices):
+    mask = np.zeros_like(img)
+
+    if len(img.shape) > 2:
+        channel_count = img.shape[2]
+        ignore_mask_color = (255,) * channel_count
+    else:
+        ignore_mask_color = 255
+
+    cv2.fillPoly(mask, vertices, ignore_mask_color)
+
+    masked_image = cv2.bitwise_and(img, mask)
+    return masked_image
 
 def process_frame(frame):
 
@@ -57,8 +70,8 @@ def process_frame(frame):
     straight_down = 130
 
     # color threshold TODO change to white-on-black
-    hue = [58, 180]
-    sat = [0, 255]
+    hue = [78, 143]
+    sat = [48, 255]
     val = [25, 255]
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -79,7 +92,7 @@ def process_frame(frame):
     contour = max(contours, key=lambda c: cv2.contourArea(c)) if len(contours) > 0 else None
 
     if contour is None:
-        return (None, None)
+        return (None, None, frame)
 
     [vx, vy, x, y] = cv2.fitLine(contour, cv2.DIST_L2, 0, 0.01, 0.01)
 
@@ -98,21 +111,27 @@ def process_frame(frame):
 
     horiz_offset = (pt_x - center_x) / center_x
 
-    #cv2.circle(frame, (pt_x, straight_down), 8, (255, 255, 0), -1)
+    # draw center point and line
+    cv2.circle(frame, (pt_x, straight_down), 8, (255, 255, 0), -1)
+    lefty = int((-x * vy / vx) + y)
+    righty = int(((frame.shape[1] - x) * vy / vx) + y)
+    cv2.line(frame, (frame.shape[1]-1, righty), (0, lefty), (0, 255, 0), 2)
 
     #cv2.imshow("IMAGE", frame)
     #cv2.waitKey(10)
 
-    return horiz_offset, slope
+    return horiz_offset, slope, frame
 
-"""
+
 # Test code
-cap = cv2.VideoCapture(1)
-cap.set(3, 600)
-cap.set(4, 400)
+if __name__ == "__main__":
+    cap = cv2.VideoCapture(1)
+    cap.set(3, 600)
+    cap.set(4, 400)
 
-while True:
-    img = cap.read()[1]
-    horiz_offset, angle_offset = process_frame(img)
-    print(horiz_offset, angle_offset)
-"""
+    while True:
+        img = cap.read()[1]
+        horiz_offset, angle_offset, frame = process_frame(img)
+        print(horiz_offset, angle_offset)
+        cv2.imshow("FRAME", frame)
+        cv2.waitKey(10)
