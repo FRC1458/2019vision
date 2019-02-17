@@ -1,22 +1,26 @@
 !_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
+cap	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^    cap = cv2.VideoCapture(1)$/;"	v	language:Python
 cap	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^cap = cv2.VideoCapture(0)$/;"	v	language:Python
 coeffs	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^coeffs = np.array([0.036169, -0.145812, -0.000633, 0.004249, 0.000000])$/;"	v	language:Python
 collections	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^import collections$/;"	i	language:Python
 collections	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_tracking.py	/^import collections$/;"	i	language:Python
 crop	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/cvsink_thread.py	/^def crop(frame, width, height):$/;"	f	language:Python
+crop	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^from cvsink_thread import CvSinkThread, crop$/;"	i	language:Python
 crop	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_tracking.py	/^from cvsink_thread import CvSinkThread, crop$/;"	i	language:Python
 cs	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^import cscore as cs$/;"	i	language:Python
 cs	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_tracking.py	/^import cscore as cs$/;"	i	language:Python
 current_camera	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^current_camera = 0 # 0 = front, 1 = front line, 2 = rear$/;"	v	language:Python
 cv2	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/cvsink_thread.py	/^import cv2$/;"	i	language:Python
 cv2	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^import cv2$/;"	i	language:Python
+cv2	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^import cv2$/;"	i	language:Python
 cv2	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^import cv2$/;"	i	language:Python
 cv2	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^import cv2$/;"	i	language:Python
 cv2	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_tracking.py	/^import cv2$/;"	i	language:Python
 CvSinkThread	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/cvsink_thread.py	/^class CvSinkThread:$/;"	c	language:Python
-CvSinkThread	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^from cvsink_thread import CvSinkThread$/;"	i	language:Python
+CvSinkThread	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^from cvsink_thread import CvSinkThread, crop$/;"	i	language:Python
 CvSinkThread	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_tracking.py	/^from cvsink_thread import CvSinkThread, crop$/;"	i	language:Python
 detect_target	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^def detect_target(frame):$/;"	f	language:Python
+detect_target	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^from detect_target import detect_target$/;"	i	language:Python
 detect_target	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_tracking.py	/^from detect_target import detect_target$/;"	i	language:Python
 FRONT_BRIGHTNESS_HUMAN	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^FRONT_BRIGHTNESS_HUMAN = 50$/;"	v	language:Python
 FRONT_BRIGHTNESS_VISION	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^FRONT_BRIGHTNESS_VISION = 70$/;"	v	language:Python
@@ -38,7 +42,9 @@ getRotation	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/det
 get_frame	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/cvsink_thread.py	/^    def get_frame(self):$/;"	m	language:Python	class:CvSinkThread
 HUE	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^HUE = (0, 94)$/;"	v	language:Python
 i	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/nt_base.py	/^i = 0$/;"	v	language:Python
+img	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^        img = cap.read()[1]$/;"	v	language:Python
 img	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^    img = cap.read()[1]$/;"	v	language:Python
+imutils	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^import imutils$/;"	i	language:Python
 logging	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/nt_base.py	/^import logging$/;"	i	language:Python
 main_loop	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^def main_loop():$/;"	f	language:Python
 main_loop	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_tracking.py	/^def main_loop():$/;"	f	language:Python
@@ -52,9 +58,13 @@ NetworkTables	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/n
 NetworkTables	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_tracking.py	/^from networktables import NetworkTables$/;"	i	language:Python
 np	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/cvsink_thread.py	/^import numpy as np$/;"	i	language:Python
 np	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^import numpy as np$/;"	i	language:Python
+np	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^import numpy as np$/;"	i	language:Python
 np	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^import numpy as np$/;"	i	language:Python
 np	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test.py	/^import numpy as np$/;"	i	language:Python
 np	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_tracking.py	/^import numpy as np$/;"	i	language:Python
+process_frame	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^def process_frame(frame, straight_down, center_x):$/;"	f	language:Python
+process_frame	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^from ground_line import process_frame$/;"	i	language:Python
+read	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^    def read(self):$/;"	m	language:Python	class:WebcamVideoStream
 REAR_BRIGHTNESS_HUMAN	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^REAR_BRIGHTNESS_HUMAN = 50$/;"	v	language:Python
 REAR_BRIGHTNESS_VISION	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^REAR_BRIGHTNESS_VISION = 70$/;"	v	language:Python
 REAR_CAM	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^REAR_CAM = "\/dev\/v4l\/by-id\/usb-046d_HD_Pro_Webcam_C920_A63EFE4F-video-index0"$/;"	v	language:Python
@@ -62,11 +72,16 @@ rear_cam	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.p
 rear_cam_sink	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^rear_cam_sink = cs.CvSink("rear_cam_sink")$/;"	v	language:Python
 REAR_EXPOSURE_HUMAN	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^REAR_EXPOSURE_HUMAN = 50$/;"	v	language:Python
 REAR_EXPOSURE_VISION	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^REAR_EXPOSURE_VISION = 10$/;"	v	language:Python
+region_of_interest	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^def region_of_interest(img, vertices):$/;"	f	language:Python
 ROBORIO_IP	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^ROBORIO_IP = "192.168.0.100"$/;"	v	language:Python
 SAT	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^SAT = (0, 255)$/;"	v	language:Python
+solidity	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^def solidity(contour):$/;"	f	language:Python
+start	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^    def start(self):$/;"	m	language:Python	class:WebcamVideoStream
+stop	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^    def stop(self):$/;"	m	language:Python	class:WebcamVideoStream
 table	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^table = NetworkTables.getTable("VisionTable")$/;"	v	language:Python
 table	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/nt_base.py	/^table = NetworkTables.getTable("VisionTable")$/;"	v	language:Python
 Thread	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/cvsink_thread.py	/^from threading import Thread$/;"	i	language:Python
+Thread	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^from threading import Thread$/;"	i	language:Python
 thread	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^thread = CvSinkThread(front_cam_sink, (240, 320, 3))$/;"	v	language:Python
 thread	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_tracking.py	/^thread = CvSinkThread(front_cam_sink, (270, 480, 3))$/;"	v	language:Python
 time	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/cvsink_thread.py	/^import time$/;"	i	language:Python
@@ -76,6 +91,9 @@ time	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/test_track
 timestamps	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^timestamps = collections.deque(maxlen=25)$/;"	v	language:Python
 translateRotation	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^    def translateRotation(rotation, width, height):$/;"	f	language:Python	function:getRotation
 update	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/cvsink_thread.py	/^    def update(self):$/;"	m	language:Python	class:CvSinkThread
+update	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^    def update(self):$/;"	m	language:Python	class:WebcamVideoStream
 VAL	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/detect_target.py	/^VAL = (41, 255)$/;"	v	language:Python
 vision_enabled	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/main.py	/^vision_enabled = False$/;"	v	language:Python
+WebcamVideoStream	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^class WebcamVideoStream:$/;"	c	language:Python
 __init__	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/cvsink_thread.py	/^    def __init__(self, cvsink, shape):$/;"	m	language:Python	class:CvSinkThread
+__init__	/Users/anish/Anish/Programming/Robotics/2019vision/target_vision/ground_line.py	/^    def __init__(self, src=0, name="WebcamVideoStream", size=None):$/;"	m	language:Python	class:WebcamVideoStream

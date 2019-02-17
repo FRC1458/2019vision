@@ -6,7 +6,9 @@ import collections
 from networktables import NetworkTables
 import cscore as cs
 
-from cvsink_thread import CvSinkThread
+from cvsink_thread import CvSinkThread, crop
+from detect_target import detect_target
+from ground_line import process_frame
 
 # CONFIG OPTIONS
 FRONT_CAM = "/dev/v4l/by-id/usb-046d_HD_Webcam_C615_1A5D6660-video-index0"
@@ -37,6 +39,8 @@ REAR_EXPOSURE_HUMAN = 50
 NetworkTables.initialize(server=ROBORIO_IP)
 
 # Globals
+# TODO change resolution to widescreen on wider cameras
+
 front_cam = cs.UsbCamera("front_cam", FRONT_CAM)
 front_cam.setVideoMode(cs.VideoMode.PixelFormat.kMJPEG, 320, 240, 30)
 front_cam_sink = cs.CvSink("front_cam_sink")
@@ -107,8 +111,27 @@ def main_loop():
     frame = thread.get_frame()
 
     if vision_enabled:
-        # vision processing
-        cv2.circle(frame, (50, 50), 15, (0, 0, 0), -1)
+        if current_camera == 1:
+            offset, angle, frame = process_frame(frame, 120, 160)
+
+            if offset is None:
+                offset = 0.0
+
+            if angle is None:
+                angle = 0.0
+
+            table.putNumber("horiz_offset", offset)
+            table.putNumber("angle_offset", angle)
+
+        else:
+            offset = detect_target(frame)
+            if offset is None:
+                offset = 0.0
+
+            angle = 0.0
+
+            table.putNumber("horiz_offset", offset)
+            table.putNumber("angle_offset", angle)
 
     # resize, greyscale, and send out frame to mjpeg
     mjpeg_source.putFrame(frame[::1, ::1])
