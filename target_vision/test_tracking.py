@@ -33,6 +33,8 @@ def main_loop():
 
     detect_target(frame)
 
+    cv2.line(frame, (frame.shape[1] // 2, 0), (frame.shape[1] // 2, frame.shape[0]), (0, 180, 180), 5)
+
     # show frame
     mjpeg_source.putFrame(crop(frame, 320, 240))
 
