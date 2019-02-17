@@ -4,6 +4,13 @@ import time
 
 from threading import Thread
 
+def crop(frame, width, height):
+    w, h = frame.shape[1], frame.shape[0]
+    ox = int((w - width) / 2)
+    oy = int((h - height) / 2)
+
+    return frame[oy:(oy+height), ox:(ox+width)]
+
 class CvSinkThread:
     def __init__(self, cvsink, shape):
         self.stream = cvsink
