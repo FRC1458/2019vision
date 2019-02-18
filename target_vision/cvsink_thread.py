@@ -21,7 +21,6 @@ class CvSinkThread:
         Thread(target=self.update, args=()).start()
 
     def update(self):
-        print("updating")
         while True:
             if self.newstream is not None:
                 self.stream = self.newstream

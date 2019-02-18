@@ -7,7 +7,6 @@ from networktables import NetworkTables
 import cscore as cs
 
 from cvsink_thread import CvSinkThread, crop
-
 from detect_target import detect_target
 
 

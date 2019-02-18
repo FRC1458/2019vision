@@ -6,6 +6,7 @@ import collections
 from networktables import NetworkTables
 import cscore as cs
 
+from detect_target import detect_target
 from cvsink_thread import CvSinkThread
 
 # CONFIG OPTIONS
@@ -17,14 +18,14 @@ ROBORIO_IP = "roborio-1458-frc.local"
 
 FRONT_BRIGHTNESS_VISION = 70
 FRONT_BRIGHTNESS_HUMAN = 50
-FRONT_EXPOSURE_VISION = 10
+FRONT_EXPOSURE_VISION = 4
 FRONT_EXPOSURE_HUMAN = 50
 
 
-FRONT_LINE_BRIGHTNESS_VISION = 70
-FRONT_LINE_BRIGHTNESS_HUMAN = 50
+FRONT_LINE_BRIGHTNESS_VISION = 20
+FRONT_LINE_BRIGHTNESS_HUMAN = 20
 FRONT_LINE_EXPOSURE_VISION = 10
-FRONT_LINE_EXPOSURE_HUMAN = 50
+FRONT_LINE_EXPOSURE_HUMAN = 20
 
 
 REAR_BRIGHTNESS_VISION = 70
@@ -37,6 +38,8 @@ REAR_EXPOSURE_HUMAN = 50
 NetworkTables.initialize(server=ROBORIO_IP)
 
 # Globals
+# TODO change resolution to widescreen on wider cameras
+
 front_cam = cs.UsbCamera("front_cam", FRONT_CAM)
 front_cam.setVideoMode(cs.VideoMode.PixelFormat.kMJPEG, 320, 240, 30)
 front_cam_sink = cs.CvSink("front_cam_sink")
@@ -71,7 +74,6 @@ def main_loop():
 
     prev_cam = current_camera
     current_camera = int(round(table.getNumber("current_camera", 0)))
-    print(current_camera)
     if current_camera not in [0, 1, 2]:
         current_camera = 0
 
@@ -108,8 +110,22 @@ def main_loop():
     frame = thread.get_frame()
 
     if vision_enabled:
-        # vision processing
-        cv2.circle(frame, (50, 50), 15, (0, 0, 0), -1)
+        if current_camera == 0:
+            offset = 0.0
+            angle = 0.0
+
+            table.putNumber("horiz_offset", offset)
+            table.putNumber("angle_offset", angle)
+
+        else:
+            offset = detect_target(frame)
+            if offset is None:
+                offset = 0.0
+
+            angle = 0.0
+
+            table.putNumber("horiz_offset", offset)
+            table.putNumber("angle_offset", angle)
 
     # resize, greyscale, and send out frame to mjpeg
     mjpeg_source.putFrame(frame[::1, ::1])
@@ -123,11 +139,7 @@ def main_loop():
 
 print("Started")
 
-timestamps = collections.deque(maxlen=25)
-timestamps.append(time.time())
 while True:
     main_loop()
     time.sleep(0.005)
-    timestamps.append(time.time())
-    #print(len(timestamps) / (timestamps[-1] - timestamps[0]))
 
