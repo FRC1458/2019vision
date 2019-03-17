@@ -2,6 +2,7 @@ import numpy as np
 import cv2
 import time
 import collections
+import colorsys
 
 from networktables import NetworkTables
 import cscore as cs
@@ -10,11 +11,23 @@ from detect_target import detect_target
 from cvsink_thread import CvSinkThread, crop
 
 # CONFIG OPTIONS
-FRONT_CAM = "/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_A63EFE4F-video-index0"
+
+####### TODO CHANGE THESE BACK TODO TODO TODO ################
+FRONT_CAM = "/dev/v4l/by-id/usb-046d_HD_Webcam_C615_1A5D6660-video-index0"
+FRONT_LINECAM = "/dev/v4l/by-id/usb-HD_Camera_Manufacturer_USB_2.0_Camera-video-index0"
+REAR_CAM = "/dev/v4l/by-id/usb-046d_0825_8710FCE0-video-index0"
+
+ROBORIO_IP = "192.168.0.100"
+
+"""FRONT_CAM = "/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_A63EFE4F-video-index0"
 FRONT_LINECAM = "/dev/v4l/by-id/usb-HD_Camera_Manufacturer_USB_2.0_Camera-video-index0"
 REAR_CAM = "/dev/v4l/by-id/usb-Microsoft_Microsoft®_LifeCam_HD-3000-video-index0"
 
-ROBORIO_IP = "roborio-1458-frc.local"
+ROBORIO_IP = "10.14.58.2"
+time.sleep(15)
+"""
+
+MIN_PRESSURE = 65 # psi
 
 FRONT_BRIGHTNESS_VISION = 50
 FRONT_BRIGHTNESS_HUMAN = 50
@@ -69,8 +82,10 @@ thread = CvSinkThread(front_cam_sink, (240, 320, 3))
 current_camera = 0 # 0 = front, 1 = front line, 2 = rear
 vision_enabled = False
 
+pin_time = 0
+
 def main_loop():
-    global current_camera, vision_enabled, frame
+    global current_camera, vision_enabled, frame, pin_time
 
     prev_cam = current_camera
     current_camera = int(round(table.getNumber("current_camera", 0)))
@@ -82,6 +97,8 @@ def main_loop():
 
     prev = vision_enabled
     vision_enabled = table.getBoolean("vision_enabled", False)
+    pinning = table.getBoolean("defense_timer", False)
+    pressure = table.getNumber("pressure_psi", 0)
 
     # change exposure between driver cam and vision-only
     if prev != vision_enabled:
@@ -129,8 +146,29 @@ def main_loop():
     if current_camera == 1:
         frame = frame[::-1, ::-1]
 
+    # crop before draw ui
+    frame = crop(frame[::1, ::1], 320, 240).copy()
+
+    if pinning:
+        if pin_time == 0:
+            pin_time = time.time()
+        else:
+            _time = (time.time() - pin_time)
+            coord = int(240 * (_time / 5.0))
+            rgb = colorsys.hsv_to_rgb(max(0.25 - 0.25*(_time / 5.0), 0), 0.92, 0.81)
+            cv2.rectangle(frame, (300, 0), (319, coord), (255*rgb[2], 255*rgb[1], 255*rgb[0]), -1)
+    else:
+        pin_time = 0
+
+    if current_camera == 1:
+        coord = int(240 * (pressure / 120.0))
+        thresh = int(240 * (MIN_PRESSURE / 120.0))
+        cv2.rectangle(frame, (0, 0), (20, coord), (255, 206, 94), -1)
+        cv2.rectangle(frame, (0, thresh), (20, thresh+3), (249, 112, 222), -1)
+
+
     # resize, greyscale, and send out frame to mjpeg
-    mjpeg_source.putFrame(crop(frame[::1, ::1], 320, 240))
+    mjpeg_source.putFrame(frame)
     #mjpeg_source.putFrame(cv2.cvtColor(frame[::1, ::1], cv2.COLOR_BGR2GRAY))
 
     # Must be at end
