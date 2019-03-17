@@ -21,11 +21,11 @@ class CvSinkThread:
         Thread(target=self.update, args=()).start()
 
     def update(self):
-        print("updating")
         while True:
             if self.newstream is not None:
                 self.stream = self.newstream
                 self.newstream = None
+                print("CHANGING STREAM")
 
             _, self.frame = self.stream.grabFrameNoTimeout(self.frame)
             time.sleep(0.001)
