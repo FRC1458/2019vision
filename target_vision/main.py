@@ -12,20 +12,20 @@ from cvsink_thread import CvSinkThread, crop
 
 # CONFIG OPTIONS
 
-####### TODO CHANGE THESE BACK TODO TODO TODO ################
+"""
 FRONT_CAM = "/dev/v4l/by-id/usb-046d_HD_Webcam_C615_1A5D6660-video-index0"
 FRONT_LINECAM = "/dev/v4l/by-id/usb-HD_Camera_Manufacturer_USB_2.0_Camera-video-index0"
 REAR_CAM = "/dev/v4l/by-id/usb-046d_0825_8710FCE0-video-index0"
 
 ROBORIO_IP = "192.168.0.100"
+"""
 
-"""FRONT_CAM = "/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_A63EFE4F-video-index0"
+FRONT_CAM = "/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_A63EFE4F-video-index0"
 FRONT_LINECAM = "/dev/v4l/by-id/usb-HD_Camera_Manufacturer_USB_2.0_Camera-video-index0"
 REAR_CAM = "/dev/v4l/by-id/usb-Microsoft_Microsoft®_LifeCam_HD-3000-video-index0"
 
 ROBORIO_IP = "10.14.58.2"
 time.sleep(15)
-"""
 
 MIN_PRESSURE = 65 # psi
 
