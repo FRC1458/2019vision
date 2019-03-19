@@ -1,0 +1,2 @@
+send byte 2x = min(255, max(0, int(255 * ((value / 2) + 0.5))))
+0xFF
