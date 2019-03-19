@@ -77,29 +77,24 @@ def detect_target(frame):
             continue
 
         rotation = getRotation(c)
+        print(rotation)
+
+        if abs(rotation) < 20:
+            continue
 
         rect = cv2.minAreaRect(c)
         box = cv2.boxPoints(rect)
         box = np.int0(box)
-        cv2.drawContours(frame, [box], 0, (23, 184, 80), 3)
 
-        cv2.circle(frame, (cx, cy), 8, (23, 184, 80), -1)
+        left_color = (240, 120, 0)
+        right_color = (50, 50, 240)
 
-        # check if contour exceeds screen
-        minX = c[c[:, :, 0].argmin()][0][0]
-        maxX = c[c[:, :, 0].argmax()][0][0]
-        
-        minY = c[c[:, :, 1].argmin()][0][1]
-        maxY = c[c[:, :, 1].argmax()][0][1]
+        color = left_color if rotation > 0 else right_color
 
-        print(minX, maxX, minY, maxY)
+        cv2.drawContours(frame, [box], 0, color, 2)
+        cv2.circle(frame, (cx, cy), 8, color, -1)
 
-        if contains(minX, 5, frame.shape[1] - 5) and contains(maxX, 5, frame.shape[1] - 5) and contains(minY, 5, frame.shape[0] - 5) and contains(maxY, 5, frame.shape[0] - 5):
-            pass
-        else:
-            area = -1
-
-        final.append([cx, cy, rotation, c, float(area)])
+        final.append([cx, cy, rotation, c, float(0.0), rotation > 0])
 
     if len(final) > 2:
         final = final[0:2]
@@ -110,15 +105,12 @@ def detect_target(frame):
 
     final = sorted(final, key=lambda x: x[0])
 
-    if final[0][4] == -1 or final[1][4] == -1:
-        angle = 0.0
-    else:
-        angle = math.sqrt(final[0][4]) - math.sqrt(final[1][4])
+    angle = 0.0
 
     center = int((final[0][0] + final[1][0]) / 2.0)
     cv2.line(frame, (center, 0), (center, frame.shape[0]), (23, 4, 190), 3)
     a = ((center / float(frame.shape[1])) - 0.5) * 2.0
-    print(a, angle)
+    #print(a, angle)
 
     return a, angle
 
