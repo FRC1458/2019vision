@@ -3,10 +3,11 @@ import cv2
 import time
 import collections
 import colorsys
+import sys
 
 from detect_target import detect_target
 
-img = cv2.imread("/Users/anish/Desktop/vision_triple.png")
+img = cv2.imread(sys.argv[1])
 
 while True:
     frame = img.copy()

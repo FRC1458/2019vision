@@ -4,7 +4,8 @@ import numpy as np
 
 # Config parameters
 HUE = (31, 130)
-SAT = (44, 197)
+#SAT = (44, 197)
+SAT = (44, 255)
 VAL = (161, 255)
 
 def getRotation(contour):
@@ -38,6 +39,9 @@ def getRotation(contour):
 
 def contains(a, minVal, maxVal):
     return (a > minVal and a < maxVal)
+
+def avg(a, b): # average two values
+    return int((float(a) + float(b)) / 2.0)
 
 def detect_target(frame):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -77,7 +81,6 @@ def detect_target(frame):
             continue
 
         rotation = getRotation(c)
-        print(rotation)
 
         if abs(rotation) < 20:
             continue
@@ -94,23 +97,56 @@ def detect_target(frame):
         cv2.drawContours(frame, [box], 0, color, 2)
         cv2.circle(frame, (cx, cy), 8, color, -1)
 
+        #              0   1     2      3      4            5
         final.append([cx, cy, rotation, c, float(0.0), rotation > 0])
-
-    if len(final) > 2:
-        final = final[0:2]
 
     if len(final) < 2:
         return None, None
 
-
     final = sorted(final, key=lambda x: x[0])
+    pairs = []
+
+    for i in range(len(final)):
+        c = final[i]
+
+        if c[5] == False: # skip if right side
+            continue
+
+        # find the closest to the left
+        r = i+1
+        if r >= len(final):
+            continue
+        nearest = final[r]
+        if nearest[5] == True: # skip if it is also a left side (shouldn't happen usually)
+            continue
+            #r += 1
+            #if r >= len(final):
+            #    continue
+            #nearest = final[r]
+
+        if abs(nearest[1] - c[1]) > 120:
+            continue
+
+        xvalue = avg(c[0], nearest[0])
+        pair = [xvalue, avg(c[1], nearest[1]), c, nearest, abs((frame.shape[1] / 2.0) - xvalue)]
+
+        # draw center point
+        cv2.circle(frame, (pair[0], pair[1]), 8, (100, 200, 100), -1)
+
+        pairs.append(pair)
+
+    if len(pairs) < 1:
+        return None, None
+
+    pairs = sorted(pairs, key=lambda x: x[4])
+    finalPair = pairs[0]
+
 
     angle = 0.0
 
-    center = int((final[0][0] + final[1][0]) / 2.0)
-    cv2.line(frame, (center, 0), (center, frame.shape[0]), (23, 4, 190), 3)
+    center = finalPair[0]
+    cv2.line(frame, (center, 20), (center, frame.shape[0] - 20), (23, 4, 190), 3)
     a = ((center / float(frame.shape[1])) - 0.5) * 2.0
-    #print(a, angle)
 
     return a, angle
 
